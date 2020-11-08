@@ -2,6 +2,10 @@
 #include <iostream>
 #include <cstdlib>
 #include <cmath>
+#include <cctype>
+
+#define IGNORE_BUFFER cin.ignore(numeric_limits<streamsize>::max(), '\n')
+#define CLEAR_BUFFER cin.clear()
 
 
 using namespace std;
@@ -61,31 +65,45 @@ bool nbreArmstrong (int nombreUtilisateur)
    return (somme == nombreUtilisateurInitial);
 }
 
+double random(int borne1, int borne2) {
+
+};
+void   buffer(char& minuscule, char& majuscule, int& nbrCara) {
+
+};
+void   trigo(double degre, double& sinus, double& cosinus, double& tangente) {
+
+	cosinus = cos(degre * M_PI / 180.0);
+	sinus = sin (degre * M_PI / 180.0);
+	tangente = tan(degre * M_PI / 180.0);
+
+};
 bool   repondOui(char valeurNon, char valeurOui, string question) {
-   char reponse;
-   bool saisieIncorrecte = false;
+	char reponse;
+	bool saisieIncorrecte;
 
-   do {
-      cout << question << " [" << valeurOui << '/' << valeurNon << ']' << " : ";
-      cin >> reponse;
+	do {
+		cout << question << " [" << valeurOui << '/' << valeurNon << ']'<< endl;
+		cin >> reponse;
+		reponse   = (char)tolower(reponse);
+		valeurOui = (char)tolower(valeurOui);
+		valeurNon = (char)tolower(valeurNon);
 
+		cout << endl << reponse << valeurNon << valeurOui << endl;
 
+		saisieIncorrecte = reponse != valeurOui || reponse != valeurNon || cin.fail();
 
-      cout << endl << reponse << valeurNon << valeurOui << endl;
+		if (saisieIncorrecte) {
+			cout << "/!\\ recommencer saisie" << endl;
+			CLEAR_BUFFER;
+			IGNORE_BUFFER;
+		}
+	} while (saisieIncorrecte);
 
+	if (reponse == valeurOui) {
+		return true;
+	} else {
+		return false;
+	}
 
-      saisieIncorrecte = !(reponse == valeurOui || reponse == valeurNon) || cin.fail();
-
-      if (saisieIncorrecte) {
-         cout << "/!\\ recommencer saisie" << endl;
-
-      }
-   } while (saisieIncorrecte);
-
-   if (reponse == valeurOui) {
-      return true;
-   }
-   else {
-      return false;
-   }
 }
