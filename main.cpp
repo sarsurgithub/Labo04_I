@@ -2,7 +2,7 @@
   ---------------------------------------------------------------------------
   Fichier     : main.cpp
   Nom du labo : Librairie
-  Auteur.e(s) : Sarah Jallon & Florian Conti
+  Auteur.e.s : Sarah Jallon & Florian Conti
   Date        : 05.11.20 - 11.11.20
   But         : Le but de ce programme est de nous proposer 7 opérations sur des nombres.... //TODO
 
@@ -17,56 +17,76 @@
 #include <cstdlib>
 #include <iomanip>
 
-// TODO appeler ce defin ignore_buffer et pas clear, clear c'est une autre commande dont on a besoin pour gérer les erreurs
+#define IGNORE_BUFFER cin.ignore(numeric_limits<streamsize>::max(), '\n')
+#define CLEAR_BUFFER cin.clear()
 
-#define CLEAR_BUFFER cin.ignore(numeric_limits<streamsize>::max(), '\n')
+enum class Option {
+	quitter, estPair, sommeChiffres, nombre1er, nombreArmstrong, nombreAleatoire, buffer, trigo
+};
 
 using namespace std;
 
-
 int main() {
 
-   const int ALIGNEMENT_NOMBRE = 5;
-   const int ALIGNEMENT_TEXTE  = 12;
+	// ----------------------------------------------------------------------------------------------
+	//constantes du programme
 
-   //TODO une enum classe se déclare en dehors du main, de préférence en majuscules
-   enum class option {estPair = 1, sommeChiffres, nombre1er, nombreArmstrong, nombreAleatoire, buffer, trigo, quitter = 0};
+	const int    ALIGNEMENT_NOMBRE = 5;
+   const int    ALIGNEMENT_TEXTE  = 12;
+   const string TIRET             = " - ";
+
+	// ----------------------------------------------------------------------------------------------
+	//affichage du choix des fonctions
 
    cout << "Options" << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::estPair         << "    " << "est pair"             << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::sommeChiffres   << "    " << "somme chiffres"       << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::nombre1er       << "    " << "nombre 1er"           << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::nombreArmstrong << "    " << "nombre de Armstrong"  << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::nombreAleatoire << "    " << "nombre aleatoire"     << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::buffer          << "    " << "buffer"               << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::trigo           << "    " << "trigo"                << endl;
-   cout << setw(ALIGNEMENT_NOMBRE) << (int)option::quitter         << "    " << "quitter"              << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::estPair         << "    " << "est pair"             << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::sommeChiffres   << "    " << "somme chiffres"       << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::nombre1er       << "    " << "nombre 1er"           << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::nombreArmstrong << "    " << "nombre de Armstrong"  << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::nombreAleatoire << "    " << "nombre aleatoire"     << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::buffer          << "    " << "buffer"               << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::trigo           << "    " << "trigo"                << endl;
+   cout << setw(ALIGNEMENT_NOMBRE) << (int)Option::quitter         << "    " << "quitter"              << endl;
+
+	// ----------------------------------------------------------------------------------------------
+	//entrée utilisateur et déclaration et/ou initialisation des variables nécessaires à celle-ci
 
    int choixUtilisateur, nombreUtilisateur;
    int intervalleMin, intervalleMax;
+   int borneInfChoix = 0, borneSupChoix = 7;
+   bool saisieIncorrecte;
 
    do {
-      if (cin.fail()) {
-         cin.clear();
-         CLEAR_BUFFER;
-      }
-      cout << "Votre choix[0 - 7] :";
-      cin >> choixUtilisateur;
-      CLEAR_BUFFER;
-   } while (choixUtilisateur < 0 or choixUtilisateur > 7 or cin.fail());
+		cout << "Votre choix [" << borneInfChoix << TIRET << borneSupChoix << "]:";
+		cin  >> choixUtilisateur;
+		IGNORE_BUFFER;
 
-   switch (option(choixUtilisateur)) {
+		saisieIncorrecte = choixUtilisateur < borneInfChoix or choixUtilisateur > borneSupChoix or cin.fail();
 
-      case option::estPair:
+		if (saisieIncorrecte) {
+			cout << "/!\\ recommencer saisie" << endl;
+			CLEAR_BUFFER;
+		}
+
+   } while (saisieIncorrecte);
+
+	// ----------------------------------------------------------------------------------------------
+   // switch allant des options 0 à 7
+
+	switch (Option(choixUtilisateur)) {
+
+		// ----------------------------------------------------------------------------------------------
+		// option 1 : savoir si un nombre est paire, dans un intervalle donné
+
+      case Option::estPair:
          do {
-            if (cin.fail())
-            {
+            if (cin.fail()) {
                cin.clear();
-               CLEAR_BUFFER;
+               IGNORE_BUFFER;
             }
             cout << "Entrez une valeur [0 - 1000] :"; //todo pas de nombres magiques
-            cin >> nombreUtilisateur;
-            CLEAR_BUFFER;
+            cin  >> nombreUtilisateur;
+            IGNORE_BUFFER;
          } while (nombreUtilisateur < 0 or nombreUtilisateur > 1000 or cin.fail()); //todo pas de nombres magiques
 
          if (estPair(nombreUtilisateur)) {
@@ -76,16 +96,16 @@ int main() {
          }
          break;
 
-      case option::sommeChiffres:
+      case Option::sommeChiffres:
          do {
             if (cin.fail()) {
                cin.clear();
-               CLEAR_BUFFER;
+               IGNORE_BUFFER;
             }
 
             cout << "Entrez une valeur [0 - 1000] :";
-            cin >> nombreUtilisateur;
-            CLEAR_BUFFER;
+            cin  >> nombreUtilisateur;
+            IGNORE_BUFFER;
 
          } while (nombreUtilisateur < 0 or nombreUtilisateur > 1000 or cin.fail());
 
@@ -93,51 +113,52 @@ int main() {
          break;
 
 
-      case option::nombre1er:
+      case Option::nombre1er:
 
-         do {
+         do { //todo décider si on veut faire un seul test de saisie ou deux
+         	  //todo créer une variable saisie incorrecte et ignorer le buffer une seule fois et avoir un msg d'erreur
             if (cin.fail()) {
                cin.clear();
-               CLEAR_BUFFER;
+               IGNORE_BUFFER;
             }
 
             cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
 
             cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[ 0 - 1000] : ";
-            cin >> intervalleMin;
-            CLEAR_BUFFER;
+            cin  >> intervalleMin;
+            IGNORE_BUFFER;
 
             cout << "   - fin    :" << setw(ALIGNEMENT_TEXTE) << "[20 - 1000] : ";
-            cin >> intervalleMax;
-            CLEAR_BUFFER;
+            cin  >> intervalleMax;
+            IGNORE_BUFFER;
 
          } while (intervalleMin < 0 or intervalleMin > 1000 or intervalleMax < 20 or intervalleMax > 1000 or cin.fail());
 
          for (; intervalleMin <= intervalleMax; ++intervalleMin) {
             if(nbre1er(intervalleMin)) {
-               cout << "\nle nombre " << intervalleMin << " est un nombre premier"; //todo se retour à la ligne est pas très parlant ? à voir
+               cout << "\nle nombre " << intervalleMin << " est un nombre premier"; //todo ce retour à la ligne est pas très parlant ? à voir
             }
          }
          break;
 
 
-      case option::nombreArmstrong:
+      case Option::nombreArmstrong:
 
          do {
             if (cin.fail()) {
                cin.clear();
-               CLEAR_BUFFER;
+               IGNORE_BUFFER;
             }
 
             cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
 
             cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[ 0 - 1000] : "; //todo aligner les << et >>
-            cin >> intervalleMin;
-            CLEAR_BUFFER;
+            cin  >> intervalleMin;
+            IGNORE_BUFFER;
 
             cout << "   - fin    :" << setw(ALIGNEMENT_TEXTE) << "[20 - 1000] : ";
-            cin >> intervalleMax;
-            CLEAR_BUFFER;
+            cin  >> intervalleMax;
+            IGNORE_BUFFER;
 
          } while (intervalleMin < 0 or intervalleMin > 1000 or intervalleMax < 20 or intervalleMax > 1000 or cin.fail());
 
@@ -149,11 +170,13 @@ int main() {
 
          break;
 
-      case option::nombreAleatoire  : cout << "test"; break;
-      case option::buffer           : cout << "test"; break;
-      case option::trigo            : cout << "test"; break;
-      case option::quitter          : cout << "test"; break;
+      case Option::nombreAleatoire  : cout << "test"; break;
+      case Option::buffer           : cout << "test"; break;
+      case Option::trigo            : cout << "test"; break;
+      case Option::quitter          : cout << "test"; break;
    }
+
+   repondOui('N', 'O', "blabla");
 
 	return EXIT_SUCCESS;
 }

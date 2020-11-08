@@ -61,32 +61,30 @@ double random(int borne1, int borne2) {
 
 }
 
-void   buffer(char& minuscule, char& majuscule, int& nbrCara) {
+void buffer(char& minuscule, char& majuscule, int& nbrCara) {
 
 }
 
-void   trigo(double degre, double& sinus, double& cosinus, double& tangente) {
-
-	cosinus = cos(degre * M_PI / 180.0);
-	sinus = sin (degre * M_PI / 180.0);
+void trigo(double degre, double& sinus, double& cosinus, double& tangente) {
+	cosinus  = cos(degre * M_PI / 180.0);
+	sinus    = sin (degre * M_PI / 180.0);
 	tangente = tan(degre * M_PI / 180.0);
-
 }
 
-bool   repondOui(char valeurNon, char valeurOui, string question) {
+bool repondOui(char valeurNon, char valeurOui, string question) {
 	char reponse;
 	bool saisieIncorrecte;
+	char valeurOuiMin;
+	char valeurNonMin;
 
 	do {
 		cout << question << " [" << valeurOui << '/' << valeurNon << ']'<< endl;
 		cin >> reponse;
 		reponse   = (char)tolower(reponse);
-		valeurOui = (char)tolower(valeurOui);
-		valeurNon = (char)tolower(valeurNon);
+		valeurOuiMin = (char)tolower(valeurOui);
+		valeurNonMin = (char)tolower(valeurNon);
 
-		cout << endl << reponse << valeurNon << valeurOui << endl;
-
-		saisieIncorrecte = reponse != valeurOui || reponse != valeurNon || cin.fail();
+		saisieIncorrecte = !(reponse  == valeurOuiMin || reponse == valeurNonMin) || cin.fail();
 
 		if (saisieIncorrecte) {
 			cout << "/!\\ recommencer saisie" << endl;
@@ -94,11 +92,9 @@ bool   repondOui(char valeurNon, char valeurOui, string question) {
 			IGNORE_BUFFER;
 		}
 	} while (saisieIncorrecte);
-
-	if (reponse == valeurOui) {
+	if (reponse == valeurOuiMin) {
 		return true;
 	} else {
 		return false;
 	}
-
 }
