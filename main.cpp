@@ -53,10 +53,12 @@ int main() {
 
    int choixUtilisateur, nombreUtilisateur;
    int intervalleMin, intervalleMax;
-   int borneInfChoix = 0, borneSupChoix = 7;
+   int borneInfChoix, borneSupChoix;
    bool saisieIncorrecte;
 
    do {
+   	borneInfChoix = 0;
+   	borneSupChoix = 7;
 		cout << "Votre choix [" << borneInfChoix << TIRET << borneSupChoix << "]:";
 		cin  >> choixUtilisateur;
 		IGNORE_BUFFER;
@@ -80,6 +82,8 @@ int main() {
 
       case Option::estPair:
          do {
+         	int borneInfChoix = 0;
+         	int borneSupCHoix = 1000;
             if (cin.fail()) {
                cin.clear();
                IGNORE_BUFFER;
@@ -152,7 +156,7 @@ int main() {
 
             cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
 
-            cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[ 0 - 1000] : "; //todo aligner les << et >>
+            cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[ 0 - 1000] : ";
             cin  >> intervalleMin;
             IGNORE_BUFFER;
 
@@ -176,7 +180,11 @@ int main() {
       case Option::quitter          : cout << "test"; break;
    }
 
-   repondOui('N', 'O', "blabla");
+	char min = ' ';
+	char maj = ' ';
+	string ligne;
+	buffer(min, maj, ligne);
+	cout << random(8, 43) << endl;
 
 	return EXIT_SUCCESS;
 }

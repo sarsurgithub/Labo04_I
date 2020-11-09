@@ -57,17 +57,37 @@ bool nbreArmstrong (int nombreUtilisateur) {
    return (somme == nombreUtilisateurInitial);
 }
 
-double random(int borne1, int borne2) {
-
+double random(int borne1, int borne2) { // src https://stackoverflow.com/a/7560171
+	static bool first = true;
+	if (first) {
+		srand( time(NULL) ); //seeding for the first time only!
+		first = false;
+	}
+	return borne1 + rand() % (( borne2 + 1 ) - borne1);
 }
 
-void buffer(char& minuscule, char& majuscule, int& nbrCara) {
+unsigned buffer(char& minuscule, char& majuscule, string ligne) {
+	getline(cin,ligne);
 
+	for (char chara : ligne) {
+		if (chara >= 65 && chara <= 90 ) {
+			if ( majuscule == ' ' || majuscule < chara) {
+				majuscule = chara;
+			}
+		} else if (chara >= 97 && chara <= 122) {
+			if (minuscule == ' ' || minuscule > chara) {
+				minuscule = chara;
+			}
+		}
+	}
+	cout << minuscule << "min" << endl;
+	cout << majuscule << "maj" << endl;
+	return ligne.size();
 }
 
 void trigo(double degre, double& sinus, double& cosinus, double& tangente) {
 	cosinus  = cos(degre * M_PI / 180.0);
-	sinus    = sin (degre * M_PI / 180.0);
+	sinus    = sin(degre * M_PI / 180.0);
 	tangente = tan(degre * M_PI / 180.0);
 }
 
@@ -80,6 +100,7 @@ bool repondOui(char valeurNon, char valeurOui, string question) {
 	do {
 		cout << question << " [" << valeurOui << '/' << valeurNon << ']'<< endl;
 		cin >> reponse;
+
 		reponse   = (char)tolower(reponse);
 		valeurOuiMin = (char)tolower(valeurOui);
 		valeurNonMin = (char)tolower(valeurNon);
