@@ -1,3 +1,17 @@
+/*
+  ---------------------------------------------------------------------------
+  Fichier     : fonctions.cpp
+  Nom du labo : Librairie
+  Auteur.e.s : Sarah Jallon & Florian Conti
+  Date        : 05.11.20 - 11.11.20
+  But         : Le but de cette lib ...//TODO
+
+  Remarque(s) :
+
+  Compilateur : MinGW-W64 g++ 8.1.0
+  ---------------------------------------------------------------------------
+*/
+
 #include "fonctions.h"
 #include <iostream>
 #include <cstdlib>
@@ -57,17 +71,17 @@ bool nbreArmstrong (int nombreUtilisateur) {
    return (somme == nombreUtilisateurInitial);
 }
 
-double random(int borne1, int borne2) { // src https://stackoverflow.com/a/7560171
+double random(int borne1, int borne2) {  // src https://stackoverflow.com/a/7560171
 	static bool first = true;
 	if (first) {
-		srand( time(NULL) ); //seeding for the first time only!
+		srand( time(NULL) ); //cette ligne est exécutée la première fois seulement
 		first = false;
 	}
 	return borne1 + rand() % (( borne2 + 1 ) - borne1);
 }
 
 unsigned buffer(char& minuscule, char& majuscule, string ligne) {
-	getline(cin,ligne);
+
 
 	for (char chara : ligne) {
 		if (chara >= 65 && chara <= 90 ) {
@@ -80,8 +94,6 @@ unsigned buffer(char& minuscule, char& majuscule, string ligne) {
 			}
 		}
 	}
-	cout << minuscule << "min" << endl;
-	cout << majuscule << "maj" << endl;
 	return ligne.size();
 }
 
@@ -101,7 +113,7 @@ bool repondOui(char valeurNon, char valeurOui, string question) {
 		cout << question << " [" << valeurOui << '/' << valeurNon << ']'<< endl;
 		cin >> reponse;
 
-		reponse   = (char)tolower(reponse);
+		reponse      = (char)tolower(reponse);
 		valeurOuiMin = (char)tolower(valeurOui);
 		valeurNonMin = (char)tolower(valeurNon);
 
