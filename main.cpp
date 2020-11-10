@@ -20,6 +20,8 @@
 #define IGNORE_BUFFER cin.ignore(numeric_limits<streamsize>::max(), '\n')
 #define CLEAR_BUFFER cin.clear()
 
+bool checkValeurDansBorne (int borneinf, int bornesup, int choixUtilisateur);
+
 enum class Option {
 	quitter, estPair, sommeChiffres, nombre1er, nombreArmstrong, nombreAleatoire, buffer, trigo
 };
@@ -94,8 +96,6 @@ int main() {
 
 			case Option::estPair:
 				do {
-					int borneInfChoix = 0;
-					int borneSupCHoix = 1000;
 					if (cin.fail()) {
 						CLEAR_BUFFER;
 						IGNORE_BUFFER;
@@ -103,7 +103,7 @@ int main() {
 					cout << "Entrez une valeur [0 - 1000] :"; //todo pas de nombres magiques
 					cin >> nombreUtilisateur;
 					IGNORE_BUFFER;
-				} while (nombreUtilisateur < 0 or nombreUtilisateur > 1000 or cin.fail()); //todo pas de nombres magiques
+				} while (!checkValeurDansBorne(0, 1000, nombreUtilisateur) or cin.fail()); //todo pas de nombres magiques
 
 				if (estPair(nombreUtilisateur)) {
 					cout << nombreUtilisateur << " est une valeur paire";
@@ -111,6 +111,10 @@ int main() {
 					cout << nombreUtilisateur << " est une valeur impaire";
 				}
 				break;
+
+
+			// ----------------------------------------------------------------------------------------------
+         // option 2 : Connaitre la somme de chiffres
 
 			case Option::sommeChiffres:
 				do {
@@ -128,6 +132,9 @@ int main() {
 				cout << "\nla somme des chiffres de " << nombreUtilisateur << " = " << sommeChiffres(nombreUtilisateur);
 				break;
 
+
+         // ----------------------------------------------------------------------------------------------
+         // option 3 : Connaitre les nombres premiers dans un intervalle
 
 			case Option::nombre1er:
 
@@ -160,6 +167,9 @@ int main() {
 				break;
 
 
+         // ----------------------------------------------------------------------------------------------
+         // option 4 : Connaitre les nombres de Armstrong dans un intervalle donné
+
 			case Option::nombreArmstrong:
 
 				do {
@@ -189,6 +199,10 @@ int main() {
 
 				break;
 
+
+         // ----------------------------------------------------------------------------------------------
+         // option 5 : Génère 1 ou plusieurs nombres aléatoires dans un intervalle
+
 			case Option::nombreAleatoire  :
 				int min, max;
 				int iterations;
@@ -205,6 +219,11 @@ int main() {
 					cout << random(min, max) << " ";
 				}
 				break;
+
+
+         // ----------------------------------------------------------------------------------------------
+         // option 6 : Détermine différentes valeurs d'une chaine de caractère
+
 			case Option::buffer           : { //todo mettre accolades partout ou nulle part
 				char minuscule = ' ';
 				char majuscule = ' ';
@@ -218,6 +237,11 @@ int main() {
 				cout << "le nombre de caractere   : " << nbrDeChara << endl;
 			}
 				break;
+
+
+         // ----------------------------------------------------------------------------------------------
+         // option 7 : Affiche le sinus, cosinus et tangente d'un angle donné
+
 			case Option::trigo            : {
 				double nbrUtilisateur;
 				double sinus, cosinus, tangente;
@@ -230,6 +254,11 @@ int main() {
 
 			}
 				break;
+
+
+         // ----------------------------------------------------------------------------------------------
+         // option 8 : Permet de quitter, ou non, le programme
+
 			case Option::quitter          : {
 				quitter = repondOui('N', 'O', "Voulez-vous quitter?");
 			}
@@ -239,4 +268,10 @@ int main() {
 	} while(!quitter);
 
 	return EXIT_SUCCESS;
+}
+
+bool checkValeurDansBorne (int borneinf, int bornesup, int choixUtilisateur){
+
+   return borneinf <= choixUtilisateur and bornesup >= choixUtilisateur;
+
 }
