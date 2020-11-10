@@ -2,7 +2,7 @@
   ---------------------------------------------------------------------------
   Fichier     : main.cpp
   Nom du labo : Librairie
-  Auteur.e.s : Sarah Jallon & Florian Conti
+  Auteur.e.s  : Sarah Jallon & Florian Conti
   Date        : 05.11.20 - 11.11.20
   But         : Le but de ce programme est de nous proposer 7 opérations sur des nombres.... //TODO
 
@@ -52,7 +52,7 @@ int main() {
 		// ----------------------------------------------------------------------------------------------
 		//affichage du choix des fonctions
 
-		cout << "Options" << endl;
+		cout << "\nOptions" << endl;
 		cout << setw(ALIGNEMENT_NOMBRE) << (int) Option::estPair         << "    " << "est pair"            << endl;
 		cout << setw(ALIGNEMENT_NOMBRE) << (int) Option::sommeChiffres   << "    " << "somme chiffres"      << endl;
 		cout << setw(ALIGNEMENT_NOMBRE) << (int) Option::nombre1er       << "    " << "nombre 1er"          << endl;
@@ -97,7 +97,7 @@ int main() {
 					int borneInfChoix = 0;
 					int borneSupCHoix = 1000;
 					if (cin.fail()) {
-						cin.clear();
+						CLEAR_BUFFER;
 						IGNORE_BUFFER;
 					}
 					cout << "Entrez une valeur [0 - 1000] :"; //todo pas de nombres magiques
@@ -115,7 +115,7 @@ int main() {
 			case Option::sommeChiffres:
 				do {
 					if (cin.fail()) {
-						cin.clear();
+						CLEAR_BUFFER;
 						IGNORE_BUFFER;
 					}
 
@@ -134,7 +134,7 @@ int main() {
 				do { //todo décider si on veut faire un seul test de saisie ou deux
 					  //todo créer une variable saisie incorrecte et ignorer le buffer une seule fois et avoir un msg d'erreur
 					if (cin.fail()) {
-						cin.clear();
+						CLEAR_BUFFER;
 						IGNORE_BUFFER;
 					}
 
@@ -164,7 +164,7 @@ int main() {
 
 				do {
 					if (cin.fail()) {
-						cin.clear();
+						CLEAR_BUFFER;
 						IGNORE_BUFFER;
 					}
 
@@ -193,16 +193,16 @@ int main() {
 				int min, max;
 				int iterations;
 
-				cout << "borneinf [-100,100], bornesup [-14,100]" << endl;
-				cout << "min:" << endl;
+				cout << setw(ALIGNEMENT_NOMBRE) << "-" << " min [-100 - 100] :";
 				cin >> min;
-				cout << "max:" << endl;
+            cout << setw(ALIGNEMENT_NOMBRE) << "-" << " max [ -14 - 100] :";
 				cin >> max;
-				cout << "combien de fois ?";
+            cout << setw(ALIGNEMENT_NOMBRE) << "-" << " nbre [  0 - 100] :";
 				cin >> iterations;
+				cout << endl;
 
 				for (int i = 0; i < iterations; i++) {
-					cout << random(min, max) << endl;
+					cout << random(min, max) << " ";
 				}
 				break;
 			case Option::buffer           : { //todo mettre accolades partout ou nulle part
@@ -210,16 +210,18 @@ int main() {
 				char majuscule = ' ';
 				unsigned nbrDeChara;
 				string ligne;
-				cout << "Entrez une phrase: " << endl;
+				cout << "Entrez une phrase : ";
 				getline(cin, ligne);
 				nbrDeChara = buffer(minuscule, majuscule, ligne);
-				cout << "maj: " << majuscule << " min: " << minuscule << " nbrChar: " << nbrDeChara << endl;
+				cout << "la plus petite minuscule : " << minuscule  << endl;
+				cout << "la plus grande majuscule : " << majuscule  << endl;
+				cout << "le nombre de caractere   : " << nbrDeChara << endl;
 			}
 				break;
 			case Option::trigo            : {
 				double nbrUtilisateur;
 				double sinus, cosinus, tangente;
-				cout << "entrez un nbr en degres [0-360]" << endl;
+				cout << "entrez un nbr en degres [0 - 360]" << endl;
 				cin >> nbrUtilisateur;
 				trigo(nbrUtilisateur, sinus, cosinus, tangente);
 				cout << "sin(" << nbrUtilisateur << ")= " << sinus << endl;

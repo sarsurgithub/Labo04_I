@@ -7,6 +7,7 @@
 
 #include <string>
 
+//todo documenter les fonctions
 bool     estPair (int nombreUtilisateur);
 int      sommeChiffres (int nombreUtilisateur);
 bool     nbre1er (int nombreUtilisateur);
