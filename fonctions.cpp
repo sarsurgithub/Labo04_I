@@ -65,7 +65,7 @@ bool nbreArmstrong (int nombreUtilisateur) {
 
    while (nombreUtilisateur > 0) {
       chiffre = nombreUtilisateur % 10;
-      somme = somme + pow(chiffre, 3);
+      somme = somme + (int)pow(chiffre, 3);
       nombreUtilisateur = nombreUtilisateur / 10;
    }
    return (somme == nombreUtilisateurInitial);
@@ -74,13 +74,13 @@ bool nbreArmstrong (int nombreUtilisateur) {
 double random(int borne1, int borne2) {  // src https://stackoverflow.com/a/7560171
 	static bool first = true;
 	if (first) {
-		srand( time(NULL) ); //cette ligne est exécutée la première fois seulement
+		srand( time(nullptr) ); //cette ligne est exécutée la première fois seulement
 		first = false;
 	}
 	return borne1 + rand() % (( borne2 + 1 ) - borne1);
 }
 
-unsigned buffer(char& minuscule, char& majuscule, string ligne) {
+unsigned buffer(char& minuscule, char& majuscule, string& ligne) {
 
 
 	for (char chara : ligne) {

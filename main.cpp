@@ -36,17 +36,8 @@ int main() {
 	const int    ALIGNEMENT_NOMBRE = 5;
    const int    ALIGNEMENT_TEXTE  = 12;
    const string TIRET             = " - ";
-   const int BORNE_INF_MENU = 0,
-   	       BORNE_SUP_MENU = 7;
-   const int BORNE_PRINCIPALE_INF    = 0,
-             BORNE_PRINCIPALE_SUP    = 1000;
-   const int BORNE_SECONDAIRE_INF    = 20; //réfléchir
-   const int BORNE_ALEATOIRE_MIN_INF = -100;
-	const int BORNE_ALEATOIRE_MIN_SUP = 100;
-	const int BORNE_ALEATOIRE_MAX_INF = -14;
-	const int BORNE_ALEATOIRE_MAX_SUP = 100,
-	BORNE_ANGLE_INF= 0, BORNE_ANGLE_SUP = 360;
-
+   const int    BORNE_INF_MENU    = 0,
+   	          BORNE_SUP_MENU    = 7;
 
 	//quitter
    bool quitter = false;
@@ -94,137 +85,155 @@ int main() {
 			// ----------------------------------------------------------------------------------------------
 			// option 1 : savoir si un nombre est paire, dans un intervalle donné
 
-			case Option::estPair:
-				do {
-					if (cin.fail()) {
-						CLEAR_BUFFER;
-						IGNORE_BUFFER;
-					}
-					cout << "Entrez une valeur [0 - 1000] :"; //todo pas de nombres magiques
-					cin >> nombreUtilisateur;
-					IGNORE_BUFFER;
-				} while (!checkValeurDansBorne(0, 1000, nombreUtilisateur) or cin.fail()); //todo pas de nombres magiques
+			case Option::estPair: {
 
-				if (estPair(nombreUtilisateur)) {
-					cout << nombreUtilisateur << " est une valeur paire";
-				} else {
-					cout << nombreUtilisateur << " est une valeur impaire";
-				}
-				break;
+            const int EST_PAIR_MIN = 0;
+            const int EST_PAIR_MAX = 1000;
 
+            do {
+               if (cin.fail()) {
+                  CLEAR_BUFFER;
+                  IGNORE_BUFFER;
+               }
+               cout << "Entrez une valeur [" << EST_PAIR_MIN << TIRET << EST_PAIR_MAX << "] :";
+               cin >> nombreUtilisateur;
+               IGNORE_BUFFER;
+            } while (!checkValeurDansBorne(EST_PAIR_MIN, EST_PAIR_MAX, nombreUtilisateur) or cin.fail()); //todo pas de nombres magiques
+
+            if (estPair(nombreUtilisateur)) {
+               cout << nombreUtilisateur << " est une valeur paire";
+            } else {
+               cout << nombreUtilisateur << " est une valeur impaire";
+            }
+			}break;
 
 			// ----------------------------------------------------------------------------------------------
          // option 2 : Connaitre la somme de chiffres
 
-			case Option::sommeChiffres:
-				do {
-					if (cin.fail()) {
-						CLEAR_BUFFER;
-						IGNORE_BUFFER;
-					}
+			case Option::sommeChiffres: {
 
-					cout << "Entrez une valeur [0 - 1000] :";
-					cin >> nombreUtilisateur;
-					IGNORE_BUFFER;
+			   const int SOMME_CHIFFRE_MIN = 0;
+            const int SOMME_CHIFFRE_MAX = 1000;
 
-				} while (nombreUtilisateur < 0 or nombreUtilisateur > 1000 or cin.fail());
+            do {
+               if (cin.fail()) {
+                  CLEAR_BUFFER;
+                  IGNORE_BUFFER;
+               }
 
-				cout << "\nla somme des chiffres de " << nombreUtilisateur << " = " << sommeChiffres(nombreUtilisateur);
-				break;
+               cout << "Entrez une valeur [" << SOMME_CHIFFRE_MIN << TIRET << SOMME_CHIFFRE_MAX << "] :";
+               cin >> nombreUtilisateur;
+               IGNORE_BUFFER;
+
+            } while (nombreUtilisateur < 0 or nombreUtilisateur > 1000 or cin.fail());
+
+            cout << "\nla somme des chiffres de " << nombreUtilisateur << " = " << sommeChiffres(nombreUtilisateur);
+			}break;
 
 
          // ----------------------------------------------------------------------------------------------
          // option 3 : Connaitre les nombres premiers dans un intervalle
 
-			case Option::nombre1er:
+			case Option::nombre1er: {
 
-				do { //todo décider si on veut faire un seul test de saisie ou deux
-					  //todo créer une variable saisie incorrecte et ignorer le buffer une seule fois et avoir un msg d'erreur
-					if (cin.fail()) {
-						CLEAR_BUFFER;
-						IGNORE_BUFFER;
-					}
+			   const int NOMBRE1ER_MIN_MIN = 0,
+			             NOMBRE1ER_MIN_MAX = 1000,
+                      NOMBRE1ER_MAX_MIN = 20,
+                      NOMBRE1ER_MAX_MAX = 1000;
 
-					cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
+            do { //todo décider si on veut faire un seul test de saisie ou deux
+               //todo créer une variable saisie incorrecte et ignorer le buffer une seule fois et avoir un msg d'erreur
+               if (cin.fail()) {
+                  CLEAR_BUFFER;
+                  IGNORE_BUFFER;
+               }
 
-					cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[ 0 - 1000] : ";
-					cin >> intervalleMin;
-					IGNORE_BUFFER;
+               cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
 
-					cout << "   - fin    :" << setw(ALIGNEMENT_TEXTE) << "[20 - 1000] : ";
-					cin >> intervalleMax;
-					IGNORE_BUFFER;
+               cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[" << " " << NOMBRE1ER_MIN_MIN << TIRET << NOMBRE1ER_MIN_MAX << "] : " ;
+               cin >> intervalleMin;
+               IGNORE_BUFFER;
 
-				} while (intervalleMin < 0 or intervalleMin > 1000 or intervalleMax < 20 or intervalleMax > 1000 or
-							cin.fail());
+               cout << "   - fin   :" << setw(ALIGNEMENT_TEXTE) << "[" << NOMBRE1ER_MAX_MIN << TIRET << NOMBRE1ER_MAX_MAX << "] : " ;
+               cin >> intervalleMax;
+               IGNORE_BUFFER;
 
-				for (; intervalleMin <= intervalleMax; ++intervalleMin) {
-					if (nbre1er(intervalleMin)) {
-						cout << "\nle nombre " << intervalleMin
-							  << " est un nombre premier"; //todo ce retour à la ligne est pas très parlant ? à voir
-					}
-				}
-				break;
+            } while (intervalleMin < NOMBRE1ER_MIN_MIN or intervalleMin > NOMBRE1ER_MIN_MAX or intervalleMax < NOMBRE1ER_MAX_MIN or intervalleMax > NOMBRE1ER_MAX_MAX or
+                     cin.fail());
+
+            for (; intervalleMin <= intervalleMax; ++intervalleMin) {
+               if (nbre1er(intervalleMin)) {
+                  cout << "\nle nombre " << intervalleMin
+                       << " est un nombre premier"; //todo ce retour à la ligne est pas très parlant ? à voir
+               }
+            }
+			}break;
+
 
 
          // ----------------------------------------------------------------------------------------------
          // option 4 : Connaitre les nombres de Armstrong dans un intervalle donné
 
-			case Option::nombreArmstrong:
+			case Option::nombreArmstrong: {
 
-				do {
-					if (cin.fail()) {
-						CLEAR_BUFFER;
-						IGNORE_BUFFER;
-					}
+            const int ALEATOIRE_MIN_MIN = 0,
+                      ALEATOIRE_MIN_MAX = 1000,
+                      ALEATOIRE_MAX_MIN = 20,
+                      ALEATOIRE_MAX_MAX = 1000;
 
-					cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
+			   do {
+               if (cin.fail()) {
+                  CLEAR_BUFFER;
+                  IGNORE_BUFFER;
+               }
 
-					cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[ 0 - 1000] : ";
-					cin >> intervalleMin;
-					IGNORE_BUFFER;
+               cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
 
-					cout << "   - fin    :" << setw(ALIGNEMENT_TEXTE) << "[20 - 1000] : ";
-					cin >> intervalleMax;
-					IGNORE_BUFFER;
+               cout << "   - debut  :" << setw(ALIGNEMENT_TEXTE) << "[" << " " << ALEATOIRE_MIN_MIN << TIRET << ALEATOIRE_MIN_MAX << "] : " ;
+               cin >> intervalleMin;
+               IGNORE_BUFFER;
 
-				} while (intervalleMin < 0 or intervalleMin > 1000 or intervalleMax < 20 or intervalleMax > 1000 or
-							cin.fail());
+               cout << "   - fin   :" << setw(ALIGNEMENT_TEXTE) << "[" << ALEATOIRE_MAX_MIN << TIRET << ALEATOIRE_MAX_MAX << "] : " ;
+               cin >> intervalleMax;
+               IGNORE_BUFFER;
 
-				for (; intervalleMin <= intervalleMax; ++intervalleMin) {
-					if (nbreArmstrong(intervalleMin)) {
-						cout << "\nle nombre " << intervalleMin << " est un nombre de Armstrong";
-					}
-				}
+            } while (intervalleMin < ALEATOIRE_MIN_MIN or intervalleMin > ALEATOIRE_MIN_MAX or intervalleMax < ALEATOIRE_MAX_MIN or intervalleMax > ALEATOIRE_MAX_MAX or
+                     cin.fail());
 
-				break;
+            for (; intervalleMin <= intervalleMax; ++intervalleMin) {
+               if (nbreArmstrong(intervalleMin)) {
+                  cout << "\nle nombre " << intervalleMin << " est un nombre de Armstrong";
+               }
+            }
+
+
+			}break;
 
 
          // ----------------------------------------------------------------------------------------------
          // option 5 : Génère 1 ou plusieurs nombres aléatoires dans un intervalle
 
-			case Option::nombreAleatoire  :
-				int min, max;
-				int iterations;
+			case Option::nombreAleatoire: {
+            int min, max;
+            int iterations;
 
-				cout << setw(ALIGNEMENT_NOMBRE) << "-" << " min [-100 - 100] :";
-				cin >> min;
-            cout << setw(ALIGNEMENT_NOMBRE) << "-" << " max [ -14 - 100] :";
-				cin >> max;
-            cout << setw(ALIGNEMENT_NOMBRE) << "-" << " nbre [  0 - 100] :";
-				cin >> iterations;
-				cout << endl;
+            cout << setw(ALIGNEMENT_NOMBRE) << TIRET << " min [-100 - 100] :";
+            cin >> min;
+            cout << setw(ALIGNEMENT_NOMBRE) << TIRET << " max [ -14 - 100] :";
+            cin >> max;
+            cout << setw(ALIGNEMENT_NOMBRE) << TIRET << " nbre [  0 - 100] :";
+            cin >> iterations;
+            cout << endl;
 
-				for (int i = 0; i < iterations; i++) {
-					cout << random(min, max) << " ";
-				}
-				break;
-
+            for (int i = 0; i < iterations; i++) {
+               cout << random(min, max) << " ";
+            }
+			}break;
 
          // ----------------------------------------------------------------------------------------------
          // option 6 : Détermine différentes valeurs d'une chaine de caractère
 
-			case Option::buffer           : { //todo mettre accolades partout ou nulle part
+			case Option::buffer: { //todo mettre accolades partout ou nulle part
 				char minuscule = ' ';
 				char majuscule = ' ';
 				unsigned nbrDeChara;
@@ -242,7 +251,7 @@ int main() {
          // ----------------------------------------------------------------------------------------------
          // option 7 : Affiche le sinus, cosinus et tangente d'un angle donné
 
-			case Option::trigo            : {
+			case Option::trigo: {
 				double nbrUtilisateur;
 				double sinus, cosinus, tangente;
 				cout << "entrez un nbr en degres [0 - 360]" << endl;
@@ -259,7 +268,7 @@ int main() {
          // ----------------------------------------------------------------------------------------------
          // option 8 : Permet de quitter, ou non, le programme
 
-			case Option::quitter          : {
+			case Option::quitter: {
 				quitter = repondOui('N', 'O', "Voulez-vous quitter?");
 			}
 				break;
