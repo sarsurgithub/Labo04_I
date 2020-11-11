@@ -8,6 +8,12 @@
 #include <string>
 
 //todo documenter les fonctions
+
+/**
+ * @brief Cette fonction permet de définir si un nombre est pair
+ * @param nombreUtilisateur est un nombre choisi par l'utilisateur pour savoir si il est pair
+ * @return une valeur booleenne qui définit si le nombre est pair, ou pas
+ */
 bool     estPair (int nombreUtilisateur);
 int      sommeChiffres (int nombreUtilisateur);
 bool     nbre1er (int nombreUtilisateur);
