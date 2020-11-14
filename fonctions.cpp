@@ -2,8 +2,8 @@
   ---------------------------------------------------------------------------
   Fichier     : fonctions.cpp
   Nom du labo : Librairie
-  Auteur.e.s : Sarah Jallon & Florian Conti
-  Date        : 05.11.20 - 11.11.20
+  Auteur.e.s  : Sarah Jallon & Florian Conti
+  Date        : 05.11.20 - 15.11.20
   But         : Le but de cette lib ...//TODO
 
   Remarque(s) :
@@ -22,8 +22,8 @@
 #define IGNORE_BUFFER cin.ignore(numeric_limits<streamsize>::max(), '\n')
 #define CLEAR_BUFFER cin.clear()
 
-
 using namespace std;
+
 
 bool estPair (int nombreUtilisateur) {
    return nombreUtilisateur % 2 == 0;
