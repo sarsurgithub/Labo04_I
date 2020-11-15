@@ -140,7 +140,7 @@ int main() {
                       ITERATION_MIN = 0,
                       ITERATION_MAX = 100;
 
-				cout << "Choisissez deux borne et un nombre de d'itérations: " << endl;
+				cout << "Choisissez deux borne et un nombre de d'iterations: " << endl;
 				int min = int(saisie("min ", ALEA_MIN, ALEA_MAX));
             int max = int(saisie("max ", min, ALEA_MAX));
             int nombreIterations = int(saisie("nombre ", ITERATION_MIN, ITERATION_MAX));
