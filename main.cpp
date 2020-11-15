@@ -8,11 +8,9 @@
                 nombres qu'il choisi. Ces options sont définies dans l'enum class "Options". L'utilisateur peut
                 recommencer autant de fois qu'il le souhaite ou choisir de quitter le programme. Le programme
                 utilise les fonctions mises à disposition par la librairie "fonctions.cpp".
-
   Remarque(s) :Toutes les saisies utilisateur sont vérifiées. L'enum class est placé en dehors du main au cas où nous
   					aimerions l'utiliser ailleurs. Certaines constantes sont déclarées dans les différentes branches du
   					switch pour les mettre au plus proche de leur utilisation.
-
   Compilateur : MinGW-W64 g++ 8.1.0
   ---------------------------------------------------------------------------
 */

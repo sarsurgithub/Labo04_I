@@ -5,8 +5,7 @@
   Auteur.e.s  : Sarah Jallon & Florian Conti
   Date        : 05.11.20 - 15.11.20
   But         : Header de la librairie fonction.cpp
-  Remarque(s) : Le fonctionnement des fonctions est expliqué dans ce fichier.
-
+  Remarque(s) : Le fonctionnement des fonctions est expliquée dans ce fichier.
   Compilateur : MinGW-W64 g++ 8.1.0
   ---------------------------------------------------------------------------
 */
