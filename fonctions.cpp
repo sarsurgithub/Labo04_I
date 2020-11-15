@@ -4,9 +4,11 @@
   Nom du labo : Librairie
   Auteur.e.s  : Sarah Jallon & Florian Conti
   Date        : 05.11.20 - 15.11.20
-  But         : Le but de cette lib ...//TODO
+  But         : Le but de cette librairie est de mettre à disposition des fonctions qui permettent d'opérer sur
+                des nombres, string et une fonction de question.
 
-  Remarque(s) :
+  Remarque(s) : La fonction random a été inspirée par internet, la source est citée. Il reste trois warning qui
+  				    n'altèrent en rien le fonctionnement du programme.
 
   Compilateur : MinGW-W64 g++ 8.1.0
   ---------------------------------------------------------------------------
@@ -122,8 +124,8 @@ bool repondOui(char valeurNon, char valeurOui, string question) {
 		if (saisieIncorrecte) {
 			cout << "/!\\ recommencer saisie" << endl;
 			CLEAR_BUFFER;
-			IGNORE_BUFFER;
 		}
+		IGNORE_BUFFER;
 	} while (saisieIncorrecte);
 	if (reponse == valeurOuiMin) {
 		return true;
