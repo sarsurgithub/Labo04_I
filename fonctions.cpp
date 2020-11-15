@@ -6,8 +6,9 @@
   Date        : 05.11.20 - 15.11.20
   But         : Le but de cette librairie est de mettre à disposition des fonctions qui permettent d'opérer sur
                 des nombres, string et une fonction de question.
-  Remarque(s) : La fonction random a été inspirée par internet, la source est citée. Il reste trois warning qui
-  				    n'altèrent en rien le fonctionnement du programme.
+  Remarque(s) : La fonction random a été inspirée par internet, la source est citée. Il reste deux warning en
+                rapport avec la fonction random, ces derniers ne sont pas dérangeant puisque cette fonction est
+                assez précise pour notre utilisation.
   Compilateur : MinGW-W64 g++ 8.1.0
   ---------------------------------------------------------------------------
 */
@@ -35,15 +36,14 @@ int sommeChiffres (int nombreUtilisateur) {
 
    while (nombreUtilisateur > 0) {
       chiffre = nombreUtilisateur % 10;
-      somme = somme + chiffre;
-      nombreUtilisateur = nombreUtilisateur / 10;
+      somme += chiffre;
+      nombreUtilisateur /= 10;
    }
    return somme;
 }
 
 bool nbre1er (int nombreUtilisateur) {
    bool testNbrPremier = true;
-
    if (nombreUtilisateur <= 1) {
       return false;
    } else {
@@ -55,7 +55,6 @@ bool nbre1er (int nombreUtilisateur) {
       }
       return testNbrPremier;
    }
-
 }
 
 bool nbreArmstrong (int nombreUtilisateur) {
@@ -65,8 +64,8 @@ bool nbreArmstrong (int nombreUtilisateur) {
 
    while (nombreUtilisateur > 0) {
       chiffre = nombreUtilisateur % 10;
-      somme = somme + (int)pow(chiffre, 3);
-      nombreUtilisateur = nombreUtilisateur / 10;
+      somme += (int)pow(chiffre, 3);
+      nombreUtilisateur /= 10;
    }
    return (somme == nombreUtilisateurInitial);
 }
@@ -83,14 +82,14 @@ double random(int borne1, int borne2) {  // src https://stackoverflow.com/a/7560
 unsigned buffer(char& minuscule, char& majuscule, string& ligne) {
 
 
-	for (char chara : ligne) {
-		if (chara >= 65 && chara <= 90 ) {
-			if ( majuscule == ' ' || majuscule < chara) {
-				majuscule = chara;
+	for (char cara : ligne) {
+		if (cara >= 65 and cara <= 90 ) {
+			if ( majuscule == ' ' or majuscule < cara) {
+				majuscule = cara;
 			}
-		} else if (chara >= 97 && chara <= 122) {
-			if (minuscule == ' ' || minuscule > chara) {
-				minuscule = chara;
+		} else if (cara >= 97 and cara <= 122) {
+			if (minuscule == ' ' or minuscule > cara) {
+				minuscule = cara;
 			}
 		}
 	}
@@ -103,7 +102,7 @@ void trigo(double degre, double& sinus, double& cosinus, double& tangente) {
 	tangente = tan(degre * M_PI / 180.0);
 }
 
-bool repondOui(char valeurNon, char valeurOui, string question) {
+bool repondOui(const char& valeurNon, const char& valeurOui, const string& question) {
 	char reponse;
 	bool saisieIncorrecte;
 	char valeurOuiMin;
@@ -117,7 +116,7 @@ bool repondOui(char valeurNon, char valeurOui, string question) {
 		valeurOuiMin = (char)tolower(valeurOui);
 		valeurNonMin = (char)tolower(valeurNon);
 
-		saisieIncorrecte = !(reponse  == valeurOuiMin || reponse == valeurNonMin) || cin.fail();
+		saisieIncorrecte = !(reponse  == valeurOuiMin or reponse == valeurNonMin) or cin.fail();
 
 		if (saisieIncorrecte) {
 			cout << "/!\\ recommencer saisie" << endl;
@@ -125,9 +124,5 @@ bool repondOui(char valeurNon, char valeurOui, string question) {
 		}
 		IGNORE_BUFFER;
 	} while (saisieIncorrecte);
-	if (reponse == valeurOuiMin) {
-		return true;
-	} else {
-		return false;
-	}
+	return reponse == valeurOuiMin;
 }

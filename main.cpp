@@ -8,9 +8,9 @@
                 nombres qu'il choisi. Ces options sont définies dans l'enum class "Options". L'utilisateur peut
                 recommencer autant de fois qu'il le souhaite ou choisir de quitter le programme. Le programme
                 utilise les fonctions mises à disposition par la librairie "fonctions.cpp".
-  Remarque(s) :Toutes les saisies utilisateur sont vérifiées. L'enum class est placé en dehors du main au cas où nous
-  					aimerions l'utiliser ailleurs. Certaines constantes sont déclarées dans les différentes branches du
-  					switch pour les mettre au plus proche de leur utilisation.
+  Remarque(s) : Toutes les saisies utilisateur sont vérifiées. L'enum class est placé en dehors du main au cas où nous
+  					 aimerions l'utiliser ailleurs. Certaines constantes sont déclarées dans les différentes branches du
+  					 switch pour les mettre au plus proche de leur utilisation.
   Compilateur : MinGW-W64 g++ 8.1.0
   ---------------------------------------------------------------------------
 */
@@ -25,7 +25,7 @@
 
 using namespace std;
 
-void saisie (string question, int borneInf, int borneSup, int& variable);
+double saisie (const string& question, int borneInf, int borneSup);
 
 //Liste des différentes options du programme
 enum class Option {
@@ -59,14 +59,12 @@ int main() {
 		// ----------------------------------------------------------------------------------------------
 		//entrée utilisateur et déclaration et/ou initialisation des variables nécessaires à celle-ci
 
-		int choixUtilisateur;
-
-		saisie("Votre choix ",BORNE_INF_MENU, BORNE_SUP_MENU, choixUtilisateur);
+		int choixOptionUtilisateur = int(saisie("Votre choix ",BORNE_INF_MENU, BORNE_SUP_MENU));
 
 		// ----------------------------------------------------------------------------------------------
 		// switch des options 0 à 7
 
-		switch (Option(choixUtilisateur)) {
+		switch (Option(choixOptionUtilisateur)) {
 
 			// ----------------------------------------------------------------------------------------------
 			// option 1 : savoir si un nombre est paire, dans un intervalle donné
@@ -74,14 +72,12 @@ int main() {
 
             const int EST_PAIR_MIN = 0,
                       EST_PAIR_MAX = 1000;
-            int nombreUtilisateur;
+            int saisieUtilisateur = int(saisie("Entrez une valeur ", EST_PAIR_MIN, EST_PAIR_MAX));
 
-            saisie("Entrez une valeur ", EST_PAIR_MIN, EST_PAIR_MAX, nombreUtilisateur);
-
-            if (estPair(nombreUtilisateur)) {
-               cout << nombreUtilisateur << " est une valeur paire";
+            if (estPair(saisieUtilisateur)) {
+               cout << saisieUtilisateur << " est une valeur paire";
             } else {
-               cout << nombreUtilisateur << " est une valeur impaire";
+               cout << saisieUtilisateur << " est une valeur impaire";
             }
 			} break;
 
@@ -91,25 +87,22 @@ int main() {
 
 			   const int SOMME_CHIFFRE_MIN = 0,
                       SOMME_CHIFFRE_MAX = 1000;
-			   int nombreUtilisateur;
 
-			   saisie("Entrez une valeur ", SOMME_CHIFFRE_MIN, SOMME_CHIFFRE_MAX, nombreUtilisateur);
+			   int saisieUtilisateur = int(saisie("Entrez une valeur ", SOMME_CHIFFRE_MIN, SOMME_CHIFFRE_MAX));
 
-            cout << "La somme des chiffres de " << nombreUtilisateur << " = " << sommeChiffres(nombreUtilisateur);
+            cout << "La somme des chiffres de " << saisieUtilisateur << " = " << sommeChiffres(saisieUtilisateur);
 			} break;
 
          // ----------------------------------------------------------------------------------------------
          // option 3 : Connaitre les nombres premiers dans un intervalle
 			case Option::nombre1er: {
 
-			   const int NOMBRE1ER_MIN_MIN = 0,
-			             NOMBRE1ER_MIN_MAX = 1000,
-                      NOMBRE1ER_MAX_MAX = 1000;
-			   int intervalleMin, intervalleMax;
+			   const int NOMBRE1ER_MIN = 0,
+			             NOMBRE1ER_MAX = 1000;
 
 				cout << "Determiner les nombres premiers compris dans un intervalle" << endl;
-				saisie("   - debut  ", NOMBRE1ER_MIN_MIN, NOMBRE1ER_MIN_MAX, intervalleMin);
-				saisie("   - fin    ", intervalleMin, NOMBRE1ER_MAX_MAX, intervalleMax);
+				int intervalleMin = int(saisie("   - debut  ", NOMBRE1ER_MIN, NOMBRE1ER_MAX));
+				int intervalleMax = int(saisie("   - fin    ", intervalleMin, NOMBRE1ER_MAX));
 
             for (; intervalleMin <= intervalleMax; ++intervalleMin) {
                if (nbre1er(intervalleMin)) {
@@ -123,13 +116,12 @@ int main() {
          // option 4 : Trouver les nombres de Armstrong dans un intervalle donné
 			case Option::nombreArmstrong: {
 
-            const int ARMSTRONG_MIN_MIN = 0,
-                      ARMSTRONG_MIN_MAX = 1000,
-                      ARMSTRONG_MAX_MAX = 1000;
-            int intervalleMin, intervalleMax;
+            const int ARMSTRONG_MIN = 0,
+                      ARMSTRONG_MAX = 1000;
+
 				cout << "Determiner les nombres Armstrong compris dans un intervalle" << endl;
-				saisie("   - debut  ", ARMSTRONG_MIN_MIN, ARMSTRONG_MIN_MAX, intervalleMin);
-				saisie("   - fin    ", intervalleMin, ARMSTRONG_MAX_MAX, intervalleMax);
+				int intervalleMin = int(saisie("   - debut  ", ARMSTRONG_MIN, ARMSTRONG_MAX));
+				int intervalleMax = int(saisie("   - fin    ", intervalleMin, ARMSTRONG_MAX));
 
             for (; intervalleMin <= intervalleMax; ++intervalleMin) {
                if (nbreArmstrong(intervalleMin)) {
@@ -143,43 +135,38 @@ int main() {
          // option 5 : Génère 1 ou plusieurs nombres aléatoires dans un intervalle
 			case Option::nombreAleatoire: {
 
-            const int ALEA_MIN_MIN  = -100,
-                      ALEA_MIN_MAX  = 100,
-                      ALEA_MAX_MAX  = 100,
+            const int ALEA_MIN  = -100,
+                      ALEA_MAX  = 100,
                       ITERATION_MIN = 0,
                       ITERATION_MAX = 100;
 
-            int  min,
-                 max,
-                 iterations;
-
 				cout << "Choisissez deux borne et un nombre de d'itérations: " << endl;
-				saisie("min ", ALEA_MIN_MIN, ALEA_MIN_MAX, min);
-            saisie("max ", min, ALEA_MAX_MAX, max);
-            saisie("nombre ", ITERATION_MIN, ITERATION_MAX, iterations);
+				int min = int(saisie("min ", ALEA_MIN, ALEA_MAX));
+            int max = int(saisie("max ", min, ALEA_MAX));
+            int nombreIterations = int(saisie("nombre ", ITERATION_MIN, ITERATION_MAX));
 
-            for (int i = 0; i < iterations; i++) {
+            for (int i = 0; i < nombreIterations; i++) {
                cout << random(min, max) << " ";
             }
 			} break;
 
          // ----------------------------------------------------------------------------------------------
-         // option 6 : Détermine différentes valeurs d'une chaine de caractère
+         // option 6 : Détermine différentes valeurs d'une chaine de caractères
 			case Option::buffer: {
 
 			   char     minuscule = ' ';
 				char     majuscule = ' ';
-				unsigned nbrDeChara;
+				unsigned nbrDeChar;
 				string   ligne;
 
 				cout << "Entrez une phrase : ";
 				getline(cin, ligne);
 
-				nbrDeChara = buffer(minuscule, majuscule, ligne);
+				nbrDeChar = buffer(minuscule, majuscule, ligne);
 
 				if (minuscule != ' ') cout << "La plus petite minuscule : " << minuscule  << endl;
 				if (majuscule != ' ') cout << "La plus grande majuscule : " << majuscule  << endl;
-				cout << "Le nombre de caractere   : " << nbrDeChara << endl;
+				cout << "Le nombre de caractere   : " << nbrDeChar << endl;
 
 			} break;
 
@@ -189,12 +176,11 @@ int main() {
 
             const int TRIGO_MIN = 0,
                       TRIGO_MAX = 360;
-				int nombreUtilisateur;
 				double    sinus,
 				          cosinus,
 				          tangente;
 
-				saisie("Entrez un nombre en degres ",TRIGO_MIN,TRIGO_MAX, nombreUtilisateur);
+				double nombreUtilisateur = saisie("Entrez un nombre en degres ",TRIGO_MIN,TRIGO_MAX);
 
 				trigo(nombreUtilisateur, sinus, cosinus, tangente);
 
@@ -206,7 +192,10 @@ int main() {
          // ----------------------------------------------------------------------------------------------
          // option 8 : Permet de quitter, ou non, le programme
 			case Option::quitter: {
-				quitter = repondOui('N', 'O', "Voulez-vous quitter?");
+			   const string QUESTION  =  "Voulez-vous quitter?";
+			   const char VALEUR_OUI  = 'O';
+			   const char VALEUR_NON  = 'N';
+				quitter = repondOui(VALEUR_NON, VALEUR_OUI,QUESTION);
 			}
 			break;
 		}
@@ -215,16 +204,18 @@ int main() {
 }
 
 // saisie et vérification de celle-ci par rapport aux bornes données ainsi qu'au type demandé.
-void saisie (string question, int borneInf, int borneSup, int& variable) {
+double saisie (const string& question, int borneInf, int borneSup) {
 	bool saisieIncorrecte;
+	double variableUtilisateur;
 	do {
 		cout << question << "[" << borneInf << "-" << borneSup << "] : ";
-		cin  >> variable;
-		saisieIncorrecte = !(borneInf <= variable and borneSup >= variable) or cin.fail();
+		cin  >> variableUtilisateur;
+		saisieIncorrecte = !(borneInf <= variableUtilisateur and borneSup >= variableUtilisateur) or cin.fail();
 		if (saisieIncorrecte) {
 			CLEAR_BUFFER;
 			cout << "/!\\ recommencer saisie" << endl;
 		}
 		IGNORE_BUFFER;
 	} while (saisieIncorrecte);
+	return variableUtilisateur;
 }
